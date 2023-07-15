@@ -1,5 +1,29 @@
+function countSubtotal() {
+  let data = JSON.parse(localStorage.getItem('cart'));
+
+  let subtotal = 0;
+  data = JSON.parse(localStorage.getItem('cart'));
+
+  data.map((item) => {
+    subtotal += item.quantity * item.price.replace('Rs. ', '');
+
+    document.querySelector('.subtotal').innerHTML = 'Total: ' + subtotal;
+  });
+
+  if (data.length < 1) {
+    document.querySelector('.subtotal').remove();
+    document.querySelector('#place-order').remove();
+
+    document.querySelector('.empty-cart-warning').style.display = 'block';
+  } else {
+    document.querySelector('.empty-cart-warning').style.display = 'none';
+  }
+}
+
 function handleAddToCart(event, id) {
   event.preventDefault();
+
+  console.log(id);
 
   const parent = document.querySelector(`[data-id="${id}"]`);
   let title = parent.querySelector('#item-title').innerText;
@@ -24,6 +48,8 @@ function handleAddToCart(event, id) {
     localStorage.setItem('cart', JSON.stringify([item]));
   }
 
+  alert('Item added to cart');
+
   updateCart();
 }
 
@@ -32,15 +58,15 @@ function updateCart() {
     return;
   }
 
-  const data = JSON.parse(localStorage.getItem('cart'));
+  let data = JSON.parse(localStorage.getItem('cart'));
 
   const parent = document.querySelector('.cart-items');
 
   data.map((item) => {
     parent.insertAdjacentHTML(
       'afterbegin',
-      `<div data-id="${item.id}">
-              <img style="width:100px" id="cart-item-image" src="${item.image}" alt="${item.title}">
+      `<div class="item" data-id="${item.id}">
+              <img id="cart-item-image" src="${item.image}" alt="${item.title}">
               <div>
                   <h3 id="cart-item-title">${item.title}</h3>
                   <p id="cart-item-price">${item.price}</p>
@@ -50,9 +76,12 @@ function updateCart() {
             </div>`
     );
   });
-}
 
-updateCart();
+  countSubtotal();
+}
+if (document.querySelector('.cart-items')) {
+  updateCart();
+}
 
 function handleRemoveFromCart(event, id) {
   event.preventDefault();
@@ -73,7 +102,7 @@ function handleRemoveFromCart(event, id) {
 
         const parent = document.querySelector(`[data-id="${id}"]`);
         let quantity = parent.querySelector('span').innerText;
-        parent.querySelector('span').innerText = quantity - 1;
+        parent.querySelector('span').innerText = +quantity - 1;
       }
     } else {
       data.push(item);
@@ -83,6 +112,8 @@ function handleRemoveFromCart(event, id) {
   } else {
     localStorage.setItem('cart', JSON.stringify([item]));
   }
+
+  countSubtotal();
 }
 
 function handlePlaceOrder() {
@@ -95,11 +126,49 @@ function handlePlaceOrder() {
       'Content-Type': 'application/json; charset=utf-8',
     },
     body: JSON.stringify(req),
-  }).then(function (res) {
-    if (res.text() === 'Success') {
-      console.log('Success');
-    } else {
-      console.log('Error occured');
-    }
-  });
+  })
+    .then(function (res) {
+      return res.text();
+    })
+    .then(function (data) {
+      if (data === 'Success') {
+        console.log('Success');
+        window.location.replace('profile.php');
+        localStorage.setItem('cart', '');
+      } else {
+        console.log('Error occured');
+      }
+    });
+}
+
+function updateOrderStatus(event, id) {
+  const span = document.querySelector(`#span-${id}`);
+  const served = document.querySelector(`#checked-${id}`).checked ? 1 : 0;
+
+  const data = {
+    id: id,
+    served: served,
+  };
+
+  fetch('update-order-status.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+    body: JSON.stringify(data),
+  })
+    .then(function (res) {
+      return res.text();
+    })
+    .then(function (data) {
+      console.log(data);
+
+      console.log(span.innerHTML);
+
+      if (served === 1) {
+        span.innerHTML = 'Served';
+      } else {
+        span.innerHTML = 'Not served';
+      }
+    });
 }

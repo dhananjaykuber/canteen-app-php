@@ -1,5 +1,11 @@
 <?php
-include 'inc/header.php';
+include 'inc/navbar.php';
+
+if (!isset($_SESSION['is_admin'])) {
+    header('Location: signup.php');
+    exit;
+}
+
 
 if (isset($_POST['submit'])) {
     $title = $_POST['title'];
@@ -30,30 +36,41 @@ if (isset($_POST['submit'])) {
 
     mysqli_close($conn);
 }
-?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
-    <div>
-        <label for="image">Image</label>
-        <input type="file" name="image">
+
+
+?>
+<div class="dashboard-container">
+    <?php include 'inc/aside.php'; ?>
+
+
+
+    <div class="dashboard-add-item-container">
+        <h2>Add Food Item</h2>
+        <form class="add-item-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
+            <div>
+                <label for="image">Image</label>
+                <input type="file" name="image">
+            </div>
+            <div>
+                <label for="title">Title</label>
+                <input type="text" name="title">
+            </div>
+            <div>
+                <label for="price">Price</label>
+                <input type="number" name="price">
+            </div>
+            <div>
+                <label for="availability">Availability</label>
+                <select name="availability">
+                    <option value="">--- Choose a availability ---</option>
+                    <option value="1" selected>Available</option>
+                    <option value="0">Not available</option>
+                </select>
+            </div>
+            <input type="submit" value="Submit" name="submit">
+        </form>
     </div>
-    <div>
-        <label for="title">Title</label>
-        <input type="text" name="title">
-    </div>
-    <div>
-        <label for="price">Price</label>
-        <input type="number" name="price">
-    </div>
-    <div>
-        <label for="availability">Availability</label>
-        <select name="availability">
-            <option value="">--- Choose a availability ---</option>
-            <option value="1" selected>Available</option>
-            <option value="0">Not available</option>
-        </select>
-    </div>
-    <input type="submit" value="Submit" name="submit">
-</form>
+</div>
 
 <?php include 'inc/footer.php'; ?>

@@ -1,4 +1,12 @@
-<?php include 'inc/header.php';
+<?php
+
+
+include 'inc/navbar.php';
+
+if (isset($_SESSION['used_id'])) {
+    header('Location: index.php');
+    exit;
+}
 
 
 if (isset($_POST['submit'])) {
@@ -22,12 +30,12 @@ if (isset($_POST['submit'])) {
 
             $_SESSION['user_id'] = $id;
 
-            echo $_SESSION['user_id'];
 
             setcookie('name', $name, time() + 60 * 60 * 24 * 30);
             setcookie('email', $email, time() + 60 * 60 * 24 * 30);
 
-            echo 'User created';
+            header('Location: index.php');
+            exit;
         } else {
             echo 'Error occured';
         }
@@ -39,19 +47,21 @@ if (isset($_POST['submit'])) {
 ?>
 
 
-<h1>User Signup</h1>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-    <div>
-        <label for="name">Name</label>
-        <input type="text" name="name">
-    </div>
-    <div>
-        <label for="email">Email</label>
-        <input type="email" name="email">
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" name="password">
-    </div>
-    <input type="submit" value="Submit" name="submit">
-</form>
+<div class="auth-container">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" class="auth-form">
+        <h1>Signup</h1>
+        <div>
+            <label for="name">Name</label>
+            <input type="text" name="name">
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" name="email">
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" name="password">
+        </div>
+        <input type="submit" value="Submit" name="submit">
+    </form>
+</div>
