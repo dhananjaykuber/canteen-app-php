@@ -2,10 +2,16 @@
 ob_start();
 include 'inc/navbar.php';
 
+$error = "";
 
 if (isset($_POST['submit'])) {
+    $error = "";
     $email = $_POST['email'];
     $password = $_POST['password'];
+
+    if(strlen($email) == 0 || strlen($password) ==0) {
+        $error = "Email and password must not empty";
+    }
 
     $query = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
 
@@ -28,7 +34,7 @@ if (isset($_POST['submit'])) {
         header('Location: index.php');
         exit;
     } else {
-        echo "User with email $email does not exists.";
+        $error = "Please enter correct credentials";
     }
 
     mysqli_close($conn);
@@ -43,12 +49,18 @@ ob_end_flush();
         <h1>Login</h1>
         <div>
             <label for="email">Email</label>
-            <input type="email" name="email">
+            <input type="email" name="email" required>
         </div>
         <div>
             <label for="password">Password</label>
-            <input type="password" name="password">
+            <input type="password" name="password" required>
         </div>
         <input type="submit" value="Submit" name="submit">
+
+        <p><?php echo $error?></p>
+
+        <a href="signup.php">Click here to signup</a>
     </form>
+
+    
 </div>

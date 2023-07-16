@@ -8,8 +8,11 @@ if (isset($_SESSION['used_id'])) {
     exit;
 }
 
+$error = "";
 
 if (isset($_POST['submit'])) {
+    $error = "";
+
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -19,7 +22,7 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($result) > 0) {
-        echo "User with email $email already exists.";
+        $error = "Email already in use.";
     } else {
         $query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$password')";
 
@@ -53,16 +56,21 @@ ob_end_flush();
         <h1>Signup</h1>
         <div>
             <label for="name">Name</label>
-            <input type="text" name="name">
+            <input type="text" name="name" required>
         </div>
         <div>
             <label for="email">Email</label>
-            <input type="email" name="email">
+            <input type="email" name="email" required>
         </div>
         <div>
             <label for="password">Password</label>
-            <input type="password" name="password">
+            <input type="password" name="password" required>
         </div>
         <input type="submit" value="Submit" name="submit">
+
+        <p><?php echo $error?></p>
+
+        <a href="login.php">Click here to login</a>
+
     </form>
 </div>

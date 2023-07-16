@@ -7,8 +7,11 @@ if (!isset($_SESSION['is_admin'])) {
     exit;
 }
 
+$message = "";
 
 if (isset($_POST['submit'])) {
+    $message = "";
+
     $title = $_POST['title'];
     $price = $_POST['price'];
     $availability = $_POST['availability'];
@@ -29,9 +32,9 @@ if (isset($_POST['submit'])) {
         $result = mysqli_query($conn, $query);
 
         if ($result) {
-            echo 'item added';
+            $message = 'Food item added';
         } else {
-            echo 'error occured';
+            $message = 'Error occured, please try again';
         }
     }
 
@@ -69,6 +72,8 @@ ob_end_flush();
                 </select>
             </div>
             <input type="submit" value="Submit" name="submit">
+
+            <p><?php echo $message?></p>
         </form>
     </div>
 </div>

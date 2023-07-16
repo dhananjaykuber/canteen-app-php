@@ -111,6 +111,7 @@ header .header-btn:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   margin-top: 50px;
 }
 
@@ -124,7 +125,9 @@ header .header-btn:hover {
 
 .food-items .item img {
   border-radius: 10px;
-  width: 150px;
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
   margin-right: 20px;
 }
 
@@ -198,6 +201,20 @@ header .header-btn:hover {
   border: 1px solid #202020;
   padding: 10px;
   width: 100%;
+}
+
+.auth-form p {
+  color: #ff5353;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.auth-form a {
+  margin-top: 15px;
+  display: block;
+  font-size: 14px;
+  color: #202020;
+  text-decoration: underline;
 }
 
 .auth-form input[type='submit'] {
@@ -306,6 +323,12 @@ aside ul li a {
 /* Add item */
 .dashboard-add-item-container {
   padding: 20px;
+}
+
+.dashboard-add-item-container p {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #2ead22;
 }
 
 .dashboard-add-item-container h2 {
@@ -467,4 +490,23 @@ aside ul li a {
   margin-bottom: 20px;
   border-top: 1px solid #e5e5e5;
   padding-top: 30px;
+}
+
+@media screen and (max-width: 600px) {
+  .home-banner .search {
+    padding: 10px;
+  }
+
+  .food-items .item {
+    flex-direction: column;
+    width: 40%;
+  }
+
+  .food-items .item img {
+    width: 100%;
+  }
+
+  .food-items .item div {
+    margin-top: 20px;
+  }
 }

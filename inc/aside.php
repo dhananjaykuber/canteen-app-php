@@ -10,7 +10,7 @@
             <a href="dashboard.php">General Information</a>
         </li>
         <li>
-            <a href="login.php">Logout</a>
+            <a href="logout.php">Logout</a>
         </li>
     </ul>
 </aside>
