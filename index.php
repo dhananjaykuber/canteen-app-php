@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 include 'inc/navbar.php';
 
 $query = 'SELECT * from food_items';
@@ -7,7 +9,7 @@ $result = mysqli_query($conn, $query);
 
 $food_items = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-
+ob_end_flush();
 ?>
 
 <div>

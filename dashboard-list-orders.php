@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include 'inc/navbar.php';
 
 
@@ -15,7 +16,7 @@ $result = mysqli_query($conn, $query);
 
 $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-
+ob_end_flush();
 ?>
 
 <div class="dashboard-container">

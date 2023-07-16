@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 
 include 'inc/navbar.php';
 
@@ -44,6 +44,7 @@ if (isset($_POST['submit'])) {
     mysqli_close($conn);
 }
 
+ob_end_flush();
 ?>
 
 

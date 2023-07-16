@@ -1,7 +1,6 @@
 <?php
+ob_start();
 include 'inc/navbar.php';
-
-// var_dump(isset($_SESSION['is_admin']));
 
 if (!isset($_SESSION['is_admin'])) {
     header('Location: signup.php');
@@ -30,6 +29,7 @@ if ($result) {
 }
 
 mysqli_close($conn);
+ob_end_flush();
 ?>
 
 <div class="dashboard-container">

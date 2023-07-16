@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 
 $_SESSION = [];
@@ -13,3 +14,5 @@ setcookie('cookie_name', '', time() - 3600, '/');
 
 header('Location: index.php');
 exit;
+
+ob_end_flush();

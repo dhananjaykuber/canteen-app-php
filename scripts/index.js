@@ -172,3 +172,28 @@ function updateOrderStatus(event, id) {
       }
     });
 }
+
+function editProfile() {
+  const status = document
+    .querySelector('.edit-profile')
+    .getAttribute('data-status');
+
+  const ele = document.querySelectorAll('.profile-input');
+  if (status === 'edit') {
+    for (let i = 0; i < ele.length; i++) {
+      ele[i].classList.add('show-input');
+    }
+
+    document
+      .querySelector('.edit-profile')
+      .setAttribute('data-status', 'cancel');
+    document.querySelector('.edit-profile').classList.add('fa-xmark');
+  } else {
+    for (let i = 0; i < ele.length; i++) {
+      ele[i].classList.remove('show-input');
+    }
+
+    document.querySelector('.edit-profile').setAttribute('data-status', 'edit');
+    document.querySelector('.edit-profile').classList.remove('fa-xmark');
+  }
+}

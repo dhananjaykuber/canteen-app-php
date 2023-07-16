@@ -1,10 +1,7 @@
 <?php
 session_start();
 
-
 include 'config/database.php';
-
-
 
 function getMysqlDatetimeFromDate(int $day, int $month, int $year)
 {

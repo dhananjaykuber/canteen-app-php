@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include 'inc/navbar.php';
 
 if (!isset($_SESSION['is_admin'])) {
@@ -36,10 +37,9 @@ if (isset($_POST['submit'])) {
 
     mysqli_close($conn);
 }
-
-
-
+ob_end_flush();
 ?>
+
 <div class="dashboard-container">
     <?php include 'inc/aside.php'; ?>
 

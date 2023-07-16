@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include 'inc/navbar.php';
 
 $data = array();
@@ -27,7 +28,7 @@ if (isset($_POST['submit'])) {
     header('Location: search.php?search=' . $_POST['search']);
 }
 
-
+ob_end_flush();
 ?>
 
 <div>

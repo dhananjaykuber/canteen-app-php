@@ -1,9 +1,7 @@
-<?php include 'inc/navbar.php';
+<?php
+ob_start();
+include 'inc/navbar.php';
 
-// if (isset($_SESSION['used_id'])) {
-//     header('Location: index.php');
-//     exit;
-// } 
 
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
@@ -36,7 +34,7 @@ if (isset($_POST['submit'])) {
     mysqli_close($conn);
 }
 
-
+ob_end_flush();
 ?>
 
 

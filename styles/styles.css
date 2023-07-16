@@ -422,15 +422,36 @@ aside ul li a {
 
 .profile-container .profile {
   margin-bottom: 30px;
+  position: relative;
 }
 
-.profile-container .profile input {
+.profile .edit-profile {
+  position: absolute;
+  right: 0px;
+}
+
+.profile-container .profile input,
+.profile-container .profile p {
   display: block;
   background: none;
   border: none;
   font-size: 16px;
   margin: 10px 0px;
   outline: none;
+  padding: 10px;
+}
+
+.profile .show-input {
+  border: 1px solid #e5e5e5 !important;
+}
+
+.profile input[type='submit'] {
+  color: #ffffff;
+  padding: 8px 10px;
+  transition: 0.2s all ease-in-out;
+  cursor: pointer;
+  background: #202020;
+  border: none;
 }
 
 .profile-container table,
